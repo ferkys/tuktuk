@@ -1,0 +1,17 @@
+Pipeline:
+  - Function: testdefs:func0
+      
+  - Parallel:
+      max_workers: 4
+      name: MyParallelPipe
+      pipe:
+        - Function: testdefs:func1
+        - Function: testdefs:func3
+        - Function: testdefs:func4
+        - Parallel:
+            max_workers: 3
+            name: my_subpipe
+            pipe:
+              - Function: testdefs:func5
+              - Function: testdefs:func6
+              - Function: testdefs:func7    
