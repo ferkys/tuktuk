@@ -71,7 +71,7 @@ class Parallel(Task):
 
 
 class SKlearnModel(Task):
-    def __init__(self, name, ifrom, binfile, featurelist, featurefile=None):        
+    def __init__(self, name, ifrom, binfile, featurelist, featurefile=None):
         super(SKlearnModel, self).__init__(name, ifrom)
 
         assert featurelist or featurefile
@@ -85,8 +85,6 @@ class SKlearnModel(Task):
         if featurefile:
             with open(featurefile, 'r') as f:
                 self.features = yaml.load(f)
-
-        print 'initialized task SKLearnModel'
 
     def __call__(self, X):
         print 'calling task SKLearnModel X = {}'.format(X)

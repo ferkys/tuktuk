@@ -9,7 +9,7 @@ class FuncDict(collections.MutableMapping):
     objects (or function name). If it's indexed by string name,
     module should be included.
     '''
-    def key(self, func):        
+    def key(self, func):
         return (
             '.'.join([func.__module__, func.__name__])
             if callable(func) else func
@@ -23,7 +23,7 @@ class FuncDict(collections.MutableMapping):
     def __init__(self):
         self._val = collections.OrderedDict()
 
-    def __getitem__(self, func):        
+    def __getitem__(self, func):
         return self._val[self.key(func)]
 
     def __setitem__(self, func, result):
@@ -50,13 +50,13 @@ class FuncDict(collections.MutableMapping):
 
     def template(self, tplstr, **kwargs):
         tpl = dict()
-        assert kwargs, "Need to specifying subsitute mappings"        
+        assert kwargs, "Need to specifying subsitute mappings"
         for k,v in kwargs.iteritems():
             assert ':' in v and '.' in v
             mod, funcarg = v.split(':')
             func, arg = funcarg.split('.')
             fullfunc = '.'.join([mod, func])
-            
+
             if arg == '*':
                 tpl[k] = self._val[fullfunc]
             else:
@@ -65,7 +65,7 @@ class FuncDict(collections.MutableMapping):
         tmpl = string.Template(tplstr)
         return tmpl.substitute(tpl)
 
-        
+
 
 
 

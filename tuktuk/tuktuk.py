@@ -28,13 +28,10 @@ def runpipe(pipe, context, collector, pipeargs=None, **kwargs):
     # pipeargs is the input to the pipeline. We first store it in our
     # results global so every task has access to ir through the special
     # input word: tuktuk.tuktuk:pipeline_args.*
-    print 'running pipe: {}'.format(pipe)
-    print 'checking pipeline_args function: {}'.format(pipeline_args)
-    print 'stored results: {}'.format(_results)
     if pipeline_args not in _results:
         print 'Init args no esta definido'
-        _results[pipeline_args] = pipeargs    
-        
+        _results[pipeline_args] = pipeargs
+
     if pipe.init:
         pipe.init(**pipeargs)
 
@@ -53,11 +50,9 @@ def runpipe(pipe, context, collector, pipeargs=None, **kwargs):
     if pipe.destroy:
         pipe.destroy(**pipeargs)
 
-    print 'collected results from pipe: {}'.format(d.get_list(pipe.tasklist))
-    print 'PERFORMANCE {}'.format(time.time() - start)
     return d.get_list(pipe.tasklist)
 
-'''serial, processes or threaded pipes are specified by fixing the 
+'''serial, processes or threaded pipes are specified by fixing the
 corresponding context and result collectors
 '''
 runpipe_serial = curry(
@@ -70,12 +65,12 @@ runpipe_thread = curry(
 
 def run(pipe, pipeargs=None, **kwargs):
     global _results
-    
+
     _results = utils.FuncDict()
     return runpipe_serial(pipe=pipe, pipeargs=pipeargs, **kwargs)
 
 ''' _insertpipe function allows to insert a pipe as a task inside other pipe.
-Same as before: for each execution context only make functions with fixed 
+Same as before: for each execution context only make functions with fixed
 contexts.
 '''
 
@@ -103,7 +98,7 @@ def parsedict(dictio):
     return p
 
 
-def parse_task(task):    
+def parse_task(task):
     # each task in the list should have only one main key in the dictionary
     assert len(task.keys()) == 1
     ttype = task.keys()[0]
